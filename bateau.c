@@ -10,7 +10,7 @@
 */
 
 #include "bateau.h"
-#include <inttypes.h>
+
 
 //Taxes
 const double TAXE_BASE_VOILIER 				= 50;

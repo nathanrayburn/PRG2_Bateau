@@ -10,6 +10,9 @@
 */
 #ifndef BATEAU_H
 #define BATEAU_H
+#include <stdint.h>
+
+
 typedef enum {
     VOILIER, MOTEUR
 } typeBateau;
@@ -18,25 +21,51 @@ static const char *const typeBateauString[] = {
 };
 
 typedef enum {
-    PECHE, PLAISANCE, AUCUNE
+    PECHE,
+    PLAISANCE,
+    AUCUNE
 } CasUtilisation;
+
 static const char *const casUtilisationString[] = {
         "Peche", "Plaisance", "Aucune"
 };
-typedef struct Voilier {
 
-};
-typedef struct Moteur {
+typedef struct {
+    const uint16_t surfaceVoile;
 
-};
-typedef struct CaracteristiqueBateau {
+} Voilier;
+
+typedef struct {
+    const uint16_t puissance;
+} Moteur;
+
+typedef union {
     Voilier voilier;
     Moteur moteur;
-};
+} CaracteristiqueBateau;
+
 typedef struct {
     char *nomBateau;
     typeBateau typeBateau;
-    struct CaracteristiqueBateau caracteristiqueBateau;;
+    CaracteristiqueBateau caracteristiqueBateau;;
 } Bateau;
+
+// Un port est un tableau de pointeurs vers des bateaux
+typedef Bateau *Port[];
+
+//
+Bateau *moteur(const char *nom, uint16_t puissance);
+
+Bateau *moteurPeche(const char *nom, uint16_t puissance, uint8_t tonnePoisson);
+
+Bateau *moteurPlaisance(const char *nom, uint16_t puissance, uint8_t longueurBateau, const char *nomPrio);
+
+Bateau *voilier(const char *nom, uint16_t surface);
+
+
+
+
+//Fonctions Taxes
+double taxeAnnuelle(const Bateau *bateau);
 
 #endif //BATEAU_H
