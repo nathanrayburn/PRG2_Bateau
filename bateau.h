@@ -35,7 +35,7 @@ static const char *const casUtilisationString[] = {
 };
 
 typedef struct {
-    const uint16_t surfaceVoile;
+    uint16_t surfaceVoile;
 
 } Voilier;
 
@@ -54,7 +54,7 @@ typedef union {
 } TypeBateauMoteur;
 
 typedef struct {
-    const uint16_t puissance;
+    uint16_t puissance;
     CasUtilisation casUtilisation;
     TypeBateauMoteur typeBateauMoteur;
 } Moteur;
