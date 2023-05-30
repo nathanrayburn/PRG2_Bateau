@@ -10,20 +10,24 @@
 */
 #ifndef BATEAU_H
 #define BATEAU_H
+
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 
 typedef enum {
     VOILIER, MOTEUR
-} typeBateau;
+} TypeBateau;
 static const char *const typeBateauString[] = {
         "Voilier", "Moteur"
 };
 
 typedef enum {
     PECHE,
-    PLAISANCE,
-    AUCUNE
+    PLAISANCE
+
 } CasUtilisation;
 
 static const char *const casUtilisationString[] = {
@@ -36,7 +40,23 @@ typedef struct {
 } Voilier;
 
 typedef struct {
+    uint8_t tonnagePoisson;
+} Peche;
+
+typedef struct {
+    char *nomProprietaire;
+    uint8_t longueur;
+} Plaisance;
+
+typedef union {
+    Peche peche;
+    Plaisance plaisance;
+} TypeBateauMoteur;
+
+typedef struct {
     const uint16_t puissance;
+    CasUtilisation casUtilisation;
+    TypeBateauMoteur typeBateauMoteur;
 } Moteur;
 
 typedef union {
@@ -46,15 +66,12 @@ typedef union {
 
 typedef struct {
     char *nomBateau;
-    typeBateau typeBateau;
+    TypeBateau typeBateau;
     CaracteristiqueBateau caracteristiqueBateau;;
 } Bateau;
 
 // Un port est un tableau de pointeurs vers des bateaux
 typedef Bateau *Port[];
-
-//
-Bateau *moteur(const char *nom, uint16_t puissance);
 
 Bateau *moteurPeche(const char *nom, uint16_t puissance, uint8_t tonnePoisson);
 
@@ -62,10 +79,24 @@ Bateau *moteurPlaisance(const char *nom, uint16_t puissance, uint8_t longueurBat
 
 Bateau *voilier(const char *nom, uint16_t surface);
 
+// Affichage
+void afficherBateau(const Bateau *bateau);
 
+void afficherPort(const Port port, size_t nbPlaces);
 
+void afficherMoteur(const Moteur *moteur);
 
-//Fonctions Taxes
-double taxeAnnuelle(const Bateau *bateau);
+void afficherVoilier(const Voilier *voilier);
+
+void statParCat(const Port port, size_t nbPlaces, CasUtilisation casUtilisation, TypeBateau typeBateau);
+
+void statistiques(const Port port, size_t nbPlaces);
 
 #endif //BATEAU_H
+
+void triTaxes(Port *port, size_t taille);
+
+int comparerTaxeDesc(void *a, void *b);
+
+bool appartientCatBateau(const Bateau *b, TypeBateau typeBateau,
+                         CasUtilisation casUtilisation);
