@@ -100,18 +100,13 @@ bool appartientCatBateau(const Bateau *b, TypeBateau typeBateau,
  */
 Bateau *moteurPeche(const char *nom, uint16_t puissance, uint8_t tonnePoisson) {
     assert(nom);
-    if(puissance > 0 && tonnePoisson > 0){
-        Bateau *bateau = malloc(sizeof(Bateau));
-        if(bateau){
-            bateau->nomBateau = nom;
-            bateau->typeBateau = MOTEUR;
-            bateau->caracteristiqueBateau.moteur.casUtilisation = PECHE;
-            bateau->caracteristiqueBateau.moteur.puissance = puissance;
-            bateau->caracteristiqueBateau.moteur.typeBateauMoteur.peche.tonnagePoisson = tonnePoisson;
-            return bateau;
-        }
-    }
-    return NULL;
+    Bateau bateau;
+    bateau->nomBateau = nom;
+    bateau->typeBateau = MOTEUR;
+    bateau->caracteristiqueBateau.moteur.casUtilisation = PECHE;
+    bateau->caracteristiqueBateau.moteur.puissance = puissance;
+    bateau->caracteristiqueBateau.moteur.typeBateauMoteur.peche.tonnagePoisson = tonnePoisson;
+    return bateau;
 }
 /**
  * Creation nouveau bateau à moteur de plaisance
@@ -123,19 +118,13 @@ Bateau *moteurPeche(const char *nom, uint16_t puissance, uint8_t tonnePoisson) {
  */
 Bateau *moteurPlaisance(const char *nom, uint16_t puissance, uint8_t longueurBateau, const char *nomPrio) {
     assert(nom);
-    if(puissance > 0 && longueurBateau > 0 && nomPrio){
-        Bateau *bateau = malloc(sizeof(Bateau));
-        if(bateau){
-            bateau->nomBateau = nom;
-            bateau->typeBateau = MOTEUR;
-            bateau->caracteristiqueBateau.moteur.casUtilisation = PLAISANCE;
-            bateau->caracteristiqueBateau.moteur.puissance = puissance;
-            bateau->caracteristiqueBateau.moteur.typeBateauMoteur.plaisance.longueur = longueurBateau;
-            bateau->caracteristiqueBateau.moteur.typeBateauMoteur.plaisance.nomProprietaire = nomPrio;
-            return bateau;
-        }
-    }
-    return NULL;
+    bateau->nomBateau = nom;
+    bateau->typeBateau = MOTEUR;
+    bateau->caracteristiqueBateau.moteur.casUtilisation = PLAISANCE;
+    bateau->caracteristiqueBateau.moteur.puissance = puissance;
+    bateau->caracteristiqueBateau.moteur.typeBateauMoteur.plaisance.longueur = longueurBateau;
+    bateau->caracteristiqueBateau.moteur.typeBateauMoteur.plaisance.nomProprietaire = nomPrio;
+    return bateau;
 }
 /**
  * Creation nouveau bateau voilier
@@ -145,15 +134,9 @@ Bateau *moteurPlaisance(const char *nom, uint16_t puissance, uint8_t longueurBat
  */
 Bateau *voilier(const char *nom, uint16_t surface) {
     assert(nom);
-    if(surface > 0){
-        Bateau *bateau = malloc(sizeof(Bateau));
-        if(bateau){
-            bateau->nomBateau = nom;
-            bateau->typeBateau = VOILIER;
-            bateau->caracteristiqueBateau.voilier.surfaceVoile = surface;
-            return bateau;
-        }
-    }
-    return NULL;
+    bateau->nomBateau = nom;
+    bateau->typeBateau = VOILIER;
+    bateau->caracteristiqueBateau.voilier.surfaceVoile = surface;
+    return bateau;
 }
 

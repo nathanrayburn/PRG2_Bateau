@@ -67,7 +67,8 @@ typedef union {
 typedef struct {
     char *nomBateau;
     TypeBateau typeBateau;
-    CaracteristiqueBateau caracteristiqueBateau;;
+    CaracteristiqueBateau caracteristiqueBateau;
+    Taxe taxe;
 } Bateau;
 
 // Un port est un tableau de pointeurs vers des bateaux
@@ -94,7 +95,6 @@ void statistiques(const Port port, size_t nbPlaces);
 
 #endif //BATEAU_H
 
-void triTaxes(Port *port, size_t taille);
 
 int comparerTaxeDesc(void *a, void *b);
 
