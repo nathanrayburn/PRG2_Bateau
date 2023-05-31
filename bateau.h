@@ -73,20 +73,7 @@ typedef struct {
 // Un port est un tableau de pointeurs vers des bateaux
 typedef Bateau *Port[];
 
-Bateau *moteurPeche(const char *nom, uint16_t puissance, uint8_t tonnePoisson);
 
-Bateau *moteurPlaisance(const char *nom, uint16_t puissance, uint8_t longueurBateau, const char *nomPrio);
-
-Bateau *voilier(const char *nom, uint16_t surface);
-
-// Affichage
-void afficherBateau(const Bateau *bateau);
-
-void afficherPort(const Port port, size_t nbPlaces);
-
-void afficherMoteur(const Moteur *moteur);
-
-void afficherVoilier(const Voilier *voilier);
 
 void statParCat(const Port port, size_t nbPlaces, CasUtilisation casUtilisation, TypeBateau typeBateau);
 
