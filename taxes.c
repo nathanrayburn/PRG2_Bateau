@@ -3,7 +3,7 @@
 //
 
 #include "taxes.h"
-
+#include <math.h>
 
 
 
@@ -61,6 +61,14 @@ double moyenneTaxes(const Port port, size_t nbPlaces, TypeBateau typeBateau,
     }
     return somme / nbrBateauParCat;
 }
+int comparerDouble(const void *a, const void *b) {
+   double valeur1 = *(const double *) a;
+   double valeur2 = *(const double *) b;
+
+   if (valeur1 < valeur2) return -1;
+   if (valeur1 > valeur2) return 1;
+   return 0;
+}
 
 // Allocation dynamique
 // Permet de créer un tableau contenant les taxes annuelles pour les bateau de chaque catégorie
@@ -70,11 +78,26 @@ double medianeTaxes(const Port port, size_t nbPlaces, TypeBateau typeBateau,
 
 double mediane(double *valeurs, size_t taille) {
     assert(valeurs);
-    qsort(valeurs, taille, sizeof(double) )
+    double valeurMediane;
+    size_t millieuTableau = taille/2;
+    qsort(valeurs, taille, sizeof(double), comparerDouble);
+    valeurMediane = taille %2 ? valeurs[millieuTableau] : valeurs[millieuTableau] + valeurs[millieuTableau - 1];
+
+    return valeurMediane;
 }
 
-int compareDouble(const void *a).... // a finir
 
 double ecTypeTaxes(const Port port, size_t nbPlaces, TypeBateau typeBateau,
-                   CasUtilisation catUtilis);
-
+                   CasUtilisation catUtilis){
+   assert(port);
+   size_t nbreCategoriesBateau = 0;
+   double valeurEcartMoy = 0;
+   double moyenne = moyenneTaxes(port, nbPlaces, typeBateau, catUtilis);
+   for (size_t i = 0; i < nbPlaces; ++i) {
+      if (port[i] && appartientCatBateau(port[i], typeBateau, catUtilis)) {
+         valeurEcartMoy += pow(taxeAnnuelle(port[i]) - moyenne, 2);
+         ++nbreCategoriesBateau;
+       }
+      }
+      return sqrt(valeurEcartMoy / (double) nbreCategoriesBateau);
+   }
