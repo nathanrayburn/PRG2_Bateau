@@ -10,17 +10,50 @@
 */
 #include "bateau.h"
 
-int main(void)
-{
-    Port monaco = {
-            //Déclaration des bateaux dans le port de Monaco
-            voilier("nom", 200),
-            moteurPlaisance("La dune", 500, 22, "Philippe K."),
-            moteurPeche("test", 600, 12),
+int main(void) {
+    Bateau monaco[] = {
 
+            // Les voiliers
+            {.nomBateau = "L'ALBATROS",
+                    .typeBateau = VOILIER,
+                    .caracteristiqueBateau.voilier.surfaceVoile = 250},
+            {.nomBateau = "MOTU",
+                    .typeBateau = VOILIER,
+                    .caracteristiqueBateau.voilier.surfaceVoile = 200},
+            {.nomBateau = "VIRUS",
+                    .typeBateau = VOILIER,
+                    .caracteristiqueBateau.voilier.surfaceVoile = 65},
+
+            // Quelques bateaux à moteurs
+            {.nomBateau = "Le VAGABOND 2",
+                    .typeBateau = MOTEUR,
+                    .caracteristiqueBateau.moteur.puissance = 30,
+                    .caracteristiqueBateau.moteur.casUtilisation = PECHE,
+                    .caracteristiqueBateau.moteur.typeBateauMoteur.peche.tonnagePoisson = 12},
+            {.nomBateau = "EMBUSCADE 3",
+                    .typeBateau = MOTEUR,
+                    .caracteristiqueBateau.moteur.puissance = 100,
+                    .caracteristiqueBateau.moteur.casUtilisation = PECHE,
+                    .caracteristiqueBateau.moteur.typeBateauMoteur.peche.tonnagePoisson = 20},
+            {.nomBateau = "CASH-A-L'EAU",
+                    .typeBateau = MOTEUR,
+                    .caracteristiqueBateau.moteur.puissance = 120,
+                    .caracteristiqueBateau.moteur.casUtilisation = PECHE,
+                    .caracteristiqueBateau.moteur.typeBateauMoteur.peche.tonnagePoisson = 50},
+
+            // un bateau de plaisance
+            {.nomBateau = "MACALOU 2",
+                    .typeBateau = MOTEUR,
+                    .caracteristiqueBateau.moteur.puissance = 150,
+                    .caracteristiqueBateau.moteur.casUtilisation = PLAISANCE,
+                    .caracteristiqueBateau.moteur.typeBateauMoteur.plaisance = {
+                    .longueur = 200,
+                    .nomProprietaire = "Jean-François",
+            }},
     };
+    const size_t nbPlacesMonaco = sizeof(monaco) / sizeof(Bateau*);
+   // afficherPort(monaco,nbPlacesMonaco);
+   // statistiques(monaco, nbPlacesMonaco);
 
-    // afficher le / les tableaux nécessaires
-    afficherPort(monaco, sizeof(monaco) / sizeof(Bateau *));
-	return 0;
+    return 0;
 }
