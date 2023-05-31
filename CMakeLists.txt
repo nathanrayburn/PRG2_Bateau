@@ -5,4 +5,4 @@ set(CMAKE_C_STANDARD 11)
 
 include_directories(.)
 
-add_executable(main.c bateau.c bateau.h bateau_affichage.c bateau_affichage.h port.c port.h taxes.c taxes.h)
+add_executable(bateau.h bateau.c main.c bateau_affichage.h bateau_affichage.c statistiques.h statistiques.c taxes.h taxes.c)

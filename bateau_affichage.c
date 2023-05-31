@@ -5,31 +5,31 @@
 #include "bateau_affichage.h"
 #include "taxes.h"
 
-#define DEVISE "Euros"
+
 void afficherVoilier(const Voilier *voilier) {
     assert(voilier);
-    printf("Surface de voile : %d m2", voilier->surfaceVoile);
+    printf("Surface de voile : %d m2\n", voilier->surfaceVoile);
 }
 
 void afficherMoteur(const Moteur *moteur) {
     assert(moteur);
-    printf("Cas d'utilisation : %s", casUtilisationString[moteur->casUtilisation]);
-    printf("Puissance : %d CV", moteur->puissance);
+    printf("Cas d'utilisation : %-20s\n", casUtilisationString[moteur->casUtilisation]);
+    printf("Puissance : %d CV\n", moteur->puissance);
     switch (moteur->casUtilisation) {
         case PECHE:
-            printf("Tonnage de poisson : %d", moteur->typeBateauMoteur.peche.tonnagePoisson);
+            printf("Tonnage de poisson : %d\n", moteur->typeBateauMoteur.peche.tonnagePoisson);
             break;
         case PLAISANCE:
-            printf("Nom du propriétaire : %s", moteur->typeBateauMoteur.plaisance.nomProprietaire);
-            printf("Longueur : %d", moteur->typeBateauMoteur.plaisance.longueur);
+            printf("Nom du proprietaire : %-20s\n", moteur->typeBateauMoteur.plaisance.nomProprietaire);
+            printf("Longueur : %d\n", moteur->typeBateauMoteur.plaisance.longueur);
             break;
     }
 }
 
 void afficherBateau(const Bateau *bateau) {
     assert(bateau);
-    printf("Nom", bateau->nomBateau);
-    printf("Genre", typeBateauString[bateau->typeBateau]);
+    printf("Nom   : %-20s\n", bateau->nomBateau);
+    printf("Genre : %-10s\n", typeBateauString[bateau->typeBateau]);
     switch (bateau->typeBateau) {
         case VOILIER:
             afficherVoilier(&bateau->caracteristiqueBateau.voilier);
@@ -38,8 +38,9 @@ void afficherBateau(const Bateau *bateau) {
             afficherMoteur(&bateau->caracteristiqueBateau.moteur);
             break;
     }
-    printf("Taxe annuelle : %d %s", taxeAnnuelle(bateau), DEVISE);
-    printf("\n");
+    double prix = taxeAnnuelle(bateau);
+    printf("Taxe annuelle : %10.2f %s\n", prix, DEVISE);
+
 }
 
 /**
@@ -51,9 +52,7 @@ void afficherPort(const Port port, size_t nbPlaces) {
     assert(port);
     printf("Listes des bateaux du port:\n");
     for (size_t i = 0; i < nbPlaces; ++i) {
-        if (port[i]) {
-            printf("#%" PRIu64 "\n", i);
-            afficherBateau(port[i]);
-        }
+        printf("#%" PRIu64 "\n", i);
+        afficherBateau(&port[i]);
     }
 }

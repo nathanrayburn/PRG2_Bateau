@@ -9,7 +9,8 @@
  -----------------------------------------------------------------------------------
 */
 #include "bateau.h"
-
+#include "bateau_affichage.h"
+#include "statistiques.h"
 int main(void) {
     Bateau monaco[] = {
 
@@ -47,13 +48,13 @@ int main(void) {
                     .caracteristiqueBateau.moteur.puissance = 150,
                     .caracteristiqueBateau.moteur.casUtilisation = PLAISANCE,
                     .caracteristiqueBateau.moteur.typeBateauMoteur.plaisance = {
-                    .longueur = 200,
-                    .nomProprietaire = "Jean-François",
-            }},
+                            .longueur = 200,
+                            .nomProprietaire = "Jean-Francois",
+                    }}
     };
-    const size_t nbPlacesMonaco = sizeof(monaco) / sizeof(Bateau*);
-   // afficherPort(monaco,nbPlacesMonaco);
-   // statistiques(monaco, nbPlacesMonaco);
+
+    afficherPort(monaco,7);
+    statistiques(monaco,7);
 
     return 0;
 }

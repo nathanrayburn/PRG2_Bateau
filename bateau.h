@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-
+#define DEVISE "Euros"
 typedef enum {
     VOILIER, MOTEUR
 } TypeBateau;
@@ -26,8 +26,8 @@ static const char *const typeBateauString[] = {
 
 typedef enum {
     PECHE,
-    PLAISANCE
-
+    PLAISANCE,
+    AUCUNE
 } CasUtilisation;
 
 static const char *const casUtilisationString[] = {
@@ -71,13 +71,13 @@ typedef struct {
 } Bateau;
 
 // Un port est un tableau de pointeurs vers des bateaux
-typedef Bateau *Port[];
+typedef Bateau Port[];
 
 
 
 void statParCat(const Port port, size_t nbPlaces, CasUtilisation casUtilisation, TypeBateau typeBateau);
 
-void statistiques(const Port port, size_t nbPlaces);
+
 
 #endif //BATEAU_H
 

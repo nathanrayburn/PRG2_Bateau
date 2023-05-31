@@ -9,7 +9,7 @@
 #include "bateau.h"
 void afficherBateau(const Bateau *bateau);
 
-void afficherPort(const Port port, size_t nbPlaces);
+void afficherPort(const Bateau port[], size_t nbPlaces);
 
 void afficherMoteur(const Moteur *moteur);
 

@@ -25,3 +25,14 @@ double mediane(double *valeurs, size_t taille);
 
 double ecTypeTaxes(const Port port, size_t nbPlaces, TypeBateau typeBateau,
                    CasUtilisation catUtilis);
+
+bool appartientCatBateau(const Bateau *b, TypeBateau typeBateau,
+                         CasUtilisation casUtilisation);
+
+void statistiques(const Port port, size_t nbPlaces);
+
+void stat(const Port port, size_t nbPlaces, TypeBateau typeBateau,
+          CasUtilisation casUtilisation);
+
+size_t nbBateauxCriteres(const Port port, size_t nbPlaces, TypeBateau typeBateau,
+                         CasUtilisation casUtilisation);
