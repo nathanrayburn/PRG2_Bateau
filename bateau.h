@@ -1,13 +1,18 @@
 /*
  -----------------------------------------------------------------------------------
- Nom du fichier :
- Auteur(s)      :
- Date creation  :
- Description    :
- Remarque(s)    :
- Compilateur    : Mingw-w64 gcc 8.1.0
+ Nom du fichier : bateau.h
+ Auteur(s)      : Leonard Klasen, Nathan Rayburn, Keya Dessasa
+ Date creation  : 31.05.2023
+
+ Description    : Ce fichier d'en-tête contient les déclarations permettant
+                  d'utiliser la structure bateau.
+
+ Remarque(s)    : -
+
+ Compilateur    : Mingw-w64 gcc 12.2.0
  -----------------------------------------------------------------------------------
 */
+
 #ifndef BATEAU_H
 #define BATEAU_H
 
@@ -17,6 +22,10 @@
 #include <stdbool.h>
 
 #define DEVISE "Euros"
+#define ESPACEMENT 20
+#define str(x) #x
+#define xstr(s) str(s)
+
 typedef enum {
     VOILIER, MOTEUR
 } TypeBateau;
@@ -74,15 +83,4 @@ typedef struct {
 typedef Bateau Port[];
 
 
-
-void statParCat(const Port port, size_t nbPlaces, CasUtilisation casUtilisation, TypeBateau typeBateau);
-
-
-
 #endif //BATEAU_H
-
-
-int comparerTaxeDesc(void *a, void *b);
-
-bool appartientCatBateau(const Bateau *b, TypeBateau typeBateau,
-                         CasUtilisation casUtilisation);

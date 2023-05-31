@@ -1,3 +1,17 @@
+/*
+ -----------------------------------------------------------------------------------
+ Nom du fichier : statistiques.c
+ Auteur(s)      : Leonard Klasen, Nathan Rayburn, Keya Dessasa
+ Date creation  : 31.05.2023
+
+ Description    : Ce fichier contient l'implémentation des fonctions
+                  calculant les différentes statistiques d'un port donné.
+
+ Remarque(s)    : -
+
+ Compilateur    : Mingw-w64 gcc 12.2.0
+ -----------------------------------------------------------------------------------
+*/
 
 #include "statistiques.h"
 #include "bateau.h"
@@ -13,14 +27,22 @@
 #define MESS_TAXE_MEDIANE "Mediane taxes"
 #define MESS_TAXE_ECTYPE "Ecart-type taxes"
 #define ERR_CREATION_TABLEAU "Erreur creation tableau"
-// Somme des taxes pour un certain type de bateau
+
+/**
+ * Permet de calculer le total des taxes pour un certain categorie de bateau
+ * @param port
+ * @param nbPlaces
+ * @param typeBateau
+ * @param casUtilisation
+ * @return double - la somme de taxe
+ */
 double sommeTaxes(const Port port, size_t nbPlaces, TypeBateau typeBateau,
-                  CasUtilisation catUtilis){
+                  CasUtilisation casUtilisation) {
 
     assert(port);
     double somme = 0;
     for (size_t i = 0; i < nbPlaces; ++i) {
-        if (&port[i] && appartientCatBateau(&port[i], typeBateau, catUtilis)) {
+        if (&port[i] && appartientCatBateau(&port[i], typeBateau, casUtilisation)) {
             somme += taxeAnnuelle(&port[i]);
         }
     }
@@ -32,22 +54,23 @@ double sommeTaxes(const Port port, size_t nbPlaces, TypeBateau typeBateau,
  * @param port
  * @param nbPlaces
  * @param typeBateau
- * @param catUtilis
+ * @param casUtilisation
  * @return
  */
 double moyenneTaxes(const Port port, size_t nbPlaces, TypeBateau typeBateau,
-                    CasUtilisation catUtilis) {
+                    CasUtilisation casUtilisation) {
     assert(port);
     size_t nbrBateauParCat = 0;
     double somme = 0;
-    for(size_t i = 0; i < nbPlaces; ++i) {
-        if(&port[i] && appartientCatBateau(&port[i], typeBateau, catUtilis)) {
+    for (size_t i = 0; i < nbPlaces; ++i) {
+        if (&port[i] && appartientCatBateau(&port[i], typeBateau, casUtilisation)) {
             ++nbrBateauParCat;
             somme += taxeAnnuelle(&port[i]);
         }
     }
-    return somme / nbrBateauParCat;
+    return somme / (double) nbrBateauParCat;
 }
+
 /**
  * fonction utilisée par qsort pour comparer les doubles et les trier
  * source: https://en.cppreference.com/w/c/algorithm/qsort
@@ -65,7 +88,7 @@ int comparerDouble(const void *a, const void *b) {
 }
 
 /**
- * Calcule la médiane du tableau de valeurs passé en paramètre
+ * Calcule et retourne la médiane du tableau de valeurs passées en paramètre
  * Le tableau original est trié et modifié
  * @param valeurs
  * @param taille
@@ -78,7 +101,7 @@ double mediane(double *valeurs, size_t taille) {
 }
 
 /**
- * Permet de calculer l'ecart type
+ * Cette fonction permet de calculer et retourner l'ecart type
  * @param port
  * @param nbPlaces
  * @param typeBateau
@@ -86,7 +109,7 @@ double mediane(double *valeurs, size_t taille) {
  * @return double
  */
 double ecTypeTaxes(const Port port, size_t nbPlaces, TypeBateau typeBateau,
-                   CasUtilisation casUtilisation){
+                   CasUtilisation casUtilisation) {
     assert(port);
     size_t nbBateauxCat = 0;
     double sommeEcartMoy = 0;
@@ -101,11 +124,11 @@ double ecTypeTaxes(const Port port, size_t nbPlaces, TypeBateau typeBateau,
     return sqrt(sommeEcartMoy / (double) nbBateauxCat);
 }
 /**
- * Fonction qui retourne si le bateau appartient à un cas d'utilisation
+ * Ce fonction retourne true si le bateau appartient à un cas d'utilisation
  * @param b
  * @param typeBateau
  * @param casUtilisation
- * @return
+ * @return bool
  */
 bool appartientCatBateau(const Bateau *b, TypeBateau typeBateau,
                          CasUtilisation casUtilisation) {
@@ -117,11 +140,12 @@ bool appartientCatBateau(const Bateau *b, TypeBateau typeBateau,
 
         case MOTEUR :
             return b->typeBateau == MOTEUR && b->caracteristiqueBateau.moteur.casUtilisation == casUtilisation;
-
+        default: break;
     }
 }
+
 /**
- * Afficher les statistiques pour les 3 catégories
+ * Afficher les statistiques pour les 3 catégories différentes
  * @param port
  * @param nbPlaces
  */
@@ -131,6 +155,7 @@ void statistiques(const Port port, size_t nbPlaces) {
     stat(port, nbPlaces, MOTEUR, PECHE);
     stat(port, nbPlaces, MOTEUR, PLAISANCE);
 }
+
 /**
  * Permet d'afficher les statistiques d'une catégorie
  * @param port
@@ -142,25 +167,26 @@ void stat(const Port port, size_t nbPlaces, TypeBateau typeBateau,
           CasUtilisation casUtilisation) {
     assert(port);
     printf("\nStatistiques\n\n");
-    printf("%-20s : %s %s\n",
-            "Categorie", typeBateauString[typeBateau], casUtilisationString[casUtilisation]);
+    printf("%-" xstr(ESPACEMENT) "s: %s %s\n", "Categorie ", typeBateauString[typeBateau],
+           casUtilisationString[casUtilisation]);
 
-    printf("%-20s : %.2f %s\n",
-            MESS_TAXE_SOMME, sommeTaxes(port, nbPlaces, typeBateau, casUtilisation),
-            DEVISE);
+    printf("%-" xstr(ESPACEMENT) "s: %0.2f %s\n",
+           MESS_TAXE_SOMME, sommeTaxes(port, nbPlaces, typeBateau, casUtilisation),
+           DEVISE);
 
-    printf("%-20s : %.2f %s\n",
-            MESS_TAXE_MOYENNE, moyenneTaxes(port, nbPlaces, typeBateau, casUtilisation),
-            DEVISE);
+    printf("%-" xstr(ESPACEMENT) "s: %0.2f %s\n",
+           MESS_TAXE_MOYENNE, moyenneTaxes(port, nbPlaces, typeBateau, casUtilisation),
+           DEVISE);
 
-    printf("%-20s : %.2f %s\n",
-            MESS_TAXE_MEDIANE, medianeTaxes(port, nbPlaces, typeBateau, casUtilisation),
-            DEVISE);
+    printf("%-" xstr(ESPACEMENT) "s: %0.2f %s\n",
+           MESS_TAXE_MEDIANE, medianeTaxes(port, nbPlaces, typeBateau, casUtilisation),
+           DEVISE);
 
-    printf("%-20s : %.2f %s\n",
-            MESS_TAXE_ECTYPE, ecTypeTaxes(port, nbPlaces, typeBateau, casUtilisation),
-            DEVISE);
+    printf("%-" xstr(ESPACEMENT) "s: %0.2f %s\n",
+           MESS_TAXE_ECTYPE, ecTypeTaxes(port, nbPlaces, typeBateau, casUtilisation),
+           DEVISE);
 }
+
 /**
  * Calculer la mediane des taxes
  * @param port
@@ -192,6 +218,7 @@ double medianeTaxes(const Bateau *port, size_t nbPlaces, TypeBateau typeBateau, 
 
     return med;
 }
+
 /**
  * Retour nombre de bateau de la categorie
  * @param port

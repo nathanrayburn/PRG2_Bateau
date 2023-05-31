@@ -1,16 +1,22 @@
 /*
  -----------------------------------------------------------------------------------
- Nom du fichier :
- Auteur(s)      :
- Date creation  :
- Description    :
- Remarque(s)    :
- Compilateur    : Mingw-w64 gcc 8.1.0
+ Nom du fichier : main.c
+ Auteur(s)      : Leonard Klasen, Nathan Rayburn, Keya Dessasa
+ Date creation  : 31.05.2023
+
+ Description    : Librairie permettant la gestion de listes doublement chaînées
+                  non circulaires
+
+ Remarque(s)    : -
+
+ Compilateur    : Mingw-w64 gcc 12.2.0
  -----------------------------------------------------------------------------------
 */
+
 #include "bateau.h"
 #include "bateau_affichage.h"
 #include "statistiques.h"
+
 int main(void) {
     Bateau monaco[] = {
 
@@ -53,8 +59,8 @@ int main(void) {
                     }}
     };
 
-    afficherPort(monaco,7);
-    statistiques(monaco,7);
+    afficherPort(monaco, 7);
+    statistiques(monaco, 7);
 
     return 0;
 }
