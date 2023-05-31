@@ -8,7 +8,6 @@
 #include "bateau.h"
 #include <assert.h>
 
-typedef double Taxe;
 //Taxes
 const double TAXE_BASE_VOILIER 				= 50;
 const double TAXE_BASE_MOTEUR 				= 100;
