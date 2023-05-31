@@ -68,7 +68,6 @@ typedef struct {
     char *nomBateau;
     TypeBateau typeBateau;
     CaracteristiqueBateau caracteristiqueBateau;
-    Taxe taxe;
 } Bateau;
 
 // Un port est un tableau de pointeurs vers des bateaux
