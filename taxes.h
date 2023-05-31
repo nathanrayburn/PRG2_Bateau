@@ -35,7 +35,7 @@
 
 typedef struct{
     double taxe;
-    Bateau *bateau;
+    const Bateau *bateau;
 } TaxeCalculeeBateau;
 double taxeAnnuelle(const Bateau *b);
 void calculerTaxeDescroissant(TaxeCalculeeBateau *taxeCalculeeBateaux, const Port port, size_t nbPLaces);

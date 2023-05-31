@@ -78,7 +78,10 @@ void afficherPort(const Port port, size_t nbPlaces) {
     calculerTaxeDescroissant(taxeCalculeeBateaux, port, nbPlaces);
     for (size_t i = 0; i < nbPlaces; ++i) {
         printf("%d)\n", i);
-        afficherBateau(taxeCalculeeBateaux[i].bateau, taxeCalculeeBateaux[i].taxe);
+        TaxeCalculeeBateau stru = taxeCalculeeBateaux[i];
+
+        printf("taxe %f ", stru.taxe);
+        //afficherBateau(taxeCalculeeBateaux[i].bateau, taxeCalculeeBateaux[i].taxe);
     }
     free(taxeCalculeeBateaux);
 }
