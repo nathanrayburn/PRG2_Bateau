@@ -2,10 +2,9 @@
  -----------------------------------------------------------------------------------
  Nom du fichier : main.c
  Auteur(s)      : Leonard Klasen, Nathan Rayburn, Keya Dessasa
- Date creation  : 31.05.2023
+ Date creation  : 25.05.2023
 
- Description    : Librairie permettant la gestion de listes doublement chaînées
-                  non circulaires
+ Description    : Programme principale pour la création d'un port contenant divers bateaux
 
  Remarque(s)    : -
 
@@ -48,7 +47,7 @@ int main(void) {
                     .caracteristiqueBateau.moteur.casUtilisation = PECHE,
                     .caracteristiqueBateau.moteur.typeBateauMoteur.peche.tonnagePoisson = 50},
 
-            // un bateau de plaisance
+            // Un bateau de plaisance
             {.nomBateau = "MACALOU 2",
                     .typeBateau = MOTEUR,
                     .caracteristiqueBateau.moteur.puissance = 150,
@@ -56,11 +55,19 @@ int main(void) {
                     .caracteristiqueBateau.moteur.typeBateauMoteur.plaisance = {
                             .longueur = 200,
                             .nomProprietaire = "Jean-Francois",
+                    }},
+            {.nomBateau = "MACALOU 1",
+                    .typeBateau = MOTEUR,
+                    .caracteristiqueBateau.moteur.puissance = 99,
+                    .caracteristiqueBateau.moteur.casUtilisation = PLAISANCE,
+                    .caracteristiqueBateau.moteur.typeBateauMoteur.plaisance = {
+                            .longueur = 200,
+                            .nomProprietaire = "Tommy Jeans",
                     }}
     };
 
-    afficherPort(monaco, 7);
-    statistiques(monaco, 7);
+    afficherPort(monaco, 8);
+    statistiques(monaco, 8);
 
     return 0;
 }

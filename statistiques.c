@@ -2,7 +2,7 @@
  -----------------------------------------------------------------------------------
  Nom du fichier : statistiques.c
  Auteur(s)      : Leonard Klasen, Nathan Rayburn, Keya Dessasa
- Date creation  : 31.05.2023
+ Date creation  : 25.05.2023
 
  Description    : Ce fichier contient l'implémentation des fonctions
                   calculant les différentes statistiques d'un port donné.
@@ -28,14 +28,7 @@
 #define MESS_TAXE_ECTYPE "Ecart-type taxes"
 #define ERR_CREATION_TABLEAU "Erreur creation tableau"
 
-/**
- * Permet de calculer le total des taxes pour un certain categorie de bateau
- * @param port
- * @param nbPlaces
- * @param typeBateau
- * @param casUtilisation
- * @return double - la somme de taxe
- */
+
 double sommeTaxes(const Port port, size_t nbPlaces, TypeBateau typeBateau,
                   CasUtilisation casUtilisation) {
 
@@ -49,14 +42,7 @@ double sommeTaxes(const Port port, size_t nbPlaces, TypeBateau typeBateau,
     return somme;
 }
 
-/**
- *
- * @param port
- * @param nbPlaces
- * @param typeBateau
- * @param casUtilisation
- * @return
- */
+
 double moyenneTaxes(const Port port, size_t nbPlaces, TypeBateau typeBateau,
                     CasUtilisation casUtilisation) {
     assert(port);
@@ -71,13 +57,7 @@ double moyenneTaxes(const Port port, size_t nbPlaces, TypeBateau typeBateau,
     return somme / (double) nbrBateauParCat;
 }
 
-/**
- * fonction utilisée par qsort pour comparer les doubles et les trier
- * source: https://en.cppreference.com/w/c/algorithm/qsort
- * @param a
- * @param b
- * @return
- */
+
 int comparerDouble(const void *a, const void *b) {
     double valeur1 = *(const double *) a;
     double valeur2 = *(const double *) b;
@@ -87,27 +67,14 @@ int comparerDouble(const void *a, const void *b) {
     return 0;
 }
 
-/**
- * Calcule et retourne la médiane du tableau de valeurs passées en paramètre
- * Le tableau original est trié et modifié
- * @param valeurs
- * @param taille
- * @return double
- */
+
 double mediane(double *valeurs, size_t taille) {
     assert(valeurs);
     qsort(valeurs, taille, sizeof(double), comparerDouble);
     return taille ? (valeurs[(taille - 1) / 2] + valeurs[taille / 2]) / 2.0 : 0;
 }
 
-/**
- * Cette fonction permet de calculer et retourner l'ecart type
- * @param port
- * @param nbPlaces
- * @param typeBateau
- * @param casUtilisation
- * @return double
- */
+
 double ecTypeTaxes(const Port port, size_t nbPlaces, TypeBateau typeBateau,
                    CasUtilisation casUtilisation) {
     assert(port);
@@ -123,32 +90,15 @@ double ecTypeTaxes(const Port port, size_t nbPlaces, TypeBateau typeBateau,
     }
     return sqrt(sommeEcartMoy / (double) nbBateauxCat);
 }
-/**
- * Ce fonction retourne true si le bateau appartient à un cas d'utilisation
- * @param b
- * @param typeBateau
- * @param casUtilisation
- * @return bool
- */
-bool appartientCatBateau(const Bateau *b, TypeBateau typeBateau,
-                         CasUtilisation casUtilisation) {
 
+bool appartientCatBateau(const Bateau* b, TypeBateau typeBateau, CasUtilisation casUtilisation) {
     assert(b);
-    switch (typeBateau) {
-        case VOILIER :
-            return b->typeBateau == VOILIER;
 
-        case MOTEUR :
-            return b->typeBateau == MOTEUR && b->caracteristiqueBateau.moteur.casUtilisation == casUtilisation;
-        default: break;
-    }
+    return (typeBateau == VOILIER) ? (b->typeBateau == VOILIER)
+                                   : (typeBateau == MOTEUR) ?
+   (b->typeBateau == MOTEUR && b->caracteristiqueBateau.moteur.casUtilisation == casUtilisation): false;
 }
 
-/**
- * Afficher les statistiques pour les 3 catégories différentes
- * @param port
- * @param nbPlaces
- */
 void statistiques(const Port port, size_t nbPlaces) {
     assert(port);
     stat(port, nbPlaces, VOILIER, AUCUNE);
@@ -156,13 +106,7 @@ void statistiques(const Port port, size_t nbPlaces) {
     stat(port, nbPlaces, MOTEUR, PLAISANCE);
 }
 
-/**
- * Permet d'afficher les statistiques d'une catégorie
- * @param port
- * @param nbPlaces
- * @param typeBateau
- * @param casUtilisation
- */
+
 void stat(const Port port, size_t nbPlaces, TypeBateau typeBateau,
           CasUtilisation casUtilisation) {
     assert(port);
@@ -187,15 +131,9 @@ void stat(const Port port, size_t nbPlaces, TypeBateau typeBateau,
            DEVISE);
 }
 
-/**
- * Calculer la mediane des taxes
- * @param port
- * @param nbPlaces
- * @param typeBateau
- * @param casUtilisation
- * @return double
- */
-double medianeTaxes(const Bateau *port, size_t nbPlaces, TypeBateau typeBateau, CasUtilisation casUtilisation) {
+
+double medianeTaxes(const Bateau *port, size_t nbPlaces, TypeBateau typeBateau,
+                    CasUtilisation casUtilisation) {
     assert(port);
     size_t nbBateauxCat = nbBateauxCriteres(port, nbPlaces, typeBateau, casUtilisation);
     double *taxes = (double *) malloc(nbBateauxCat * sizeof(double));
@@ -219,14 +157,7 @@ double medianeTaxes(const Bateau *port, size_t nbPlaces, TypeBateau typeBateau, 
     return med;
 }
 
-/**
- * Retour nombre de bateau de la categorie
- * @param port
- * @param nbPlaces
- * @param typeBateau
- * @param casUtilisation
- * @return size_t
- */
+
 size_t nbBateauxCriteres(const Port port, size_t nbPlaces, TypeBateau typeBateau,
                          CasUtilisation casUtilisation) {
     assert(port);

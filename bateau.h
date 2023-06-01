@@ -2,7 +2,7 @@
  -----------------------------------------------------------------------------------
  Nom du fichier : bateau.h
  Auteur(s)      : Leonard Klasen, Nathan Rayburn, Keya Dessasa
- Date creation  : 31.05.2023
+ Date creation  : 25.05.2023
 
  Description    : Ce fichier d'en-tête contient les déclarations permettant
                   d'utiliser la structure bateau.
@@ -26,6 +26,7 @@
 #define str(x) #x
 #define xstr(s) str(s)
 
+
 typedef enum {
     VOILIER, MOTEUR
 } TypeBateau;
@@ -33,6 +34,8 @@ static const char *const typeBateauString[] = {
         "Voilier", "Moteur"
 };
 
+//Ce sont les sous-catégories du bateau à moteur
+//AUCUNE est utilisé pour les bateaux à voile
 typedef enum {
     PECHE,
     PLAISANCE,

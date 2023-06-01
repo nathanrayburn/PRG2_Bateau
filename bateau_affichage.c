@@ -2,7 +2,7 @@
  -----------------------------------------------------------------------------------
  Nom du fichier : bateau_affichage.c
  Auteur(s)      : Leonard Klasen, Nathan Rayburn, Keya Dessasa
- Date creation  : 31.05.2023
+ Date creation  : 25.05.2023
 
  Description    : Ce fichier contient l'implémentation des fonctions d'affichage
 
@@ -11,7 +11,6 @@
  Compilateur    : Mingw-w64 gcc 12.2.0
  -----------------------------------------------------------------------------------
 */
-
 
 #include "bateau_affichage.h"
 
@@ -23,7 +22,8 @@ void afficherVoilier(const Voilier *voilier) {
 
 void afficherMoteur(const Moteur *moteur) {
     assert(moteur);
-    printf("%-" xstr(ESPACEMENT) "s: %s\n", "Cas d'utilsiation", casUtilisationString[moteur->casUtilisation]);
+    printf("%-" xstr(ESPACEMENT) "s: %s\n", "Cas d'utilsiation",
+           casUtilisationString[moteur->casUtilisation]);
     printf("%-" xstr(ESPACEMENT) "s: %d\n", "Puissance", moteur->puissance);
     switch (moteur->casUtilisation) {
         case PECHE:
@@ -33,7 +33,8 @@ void afficherMoteur(const Moteur *moteur) {
         case PLAISANCE:
             printf("%-" xstr(ESPACEMENT) "s: %s\n", "Nom du proprietaire",
                    moteur->typeBateauMoteur.plaisance.nomProprietaire);
-            printf("%-" xstr(ESPACEMENT) "s: %d\n", "Longueur", moteur->typeBateauMoteur.plaisance.longueur);
+            printf("%-" xstr(ESPACEMENT) "s: %d\n", "Longueur",
+                   moteur->typeBateauMoteur.plaisance.longueur);
             break;
 
         case AUCUNE:
@@ -41,13 +42,6 @@ void afficherMoteur(const Moteur *moteur) {
     }
 }
 
-/**
- * Affiche le nom, la catégorie et la propriété de l'attribut propre au bateau
- * @param port
- * @param nbPlaces
- * @param typeBateau
- * @param casUtilisation
- */
 void afficherBateau(const Bateau *bateau, double taxe) {
     assert(bateau);
 
@@ -66,22 +60,15 @@ void afficherBateau(const Bateau *bateau, double taxe) {
 
 }
 
-/**
- * Affiche les informations sur tous les bateaux d'un port
- * @param port Pointeur sur le port
- * @param nbPlaces Nombre de place du port
- */
 void afficherPort(const Port port, size_t nbPlaces) {
     assert(port);
     printf("Listes des bateaux du port:\n");
-    TaxeCalculeeBateau *taxeCalculeeBateaux = (TaxeCalculeeBateau *) calloc(nbPlaces, sizeof(TaxeCalculeeBateau));
+    TaxeCalculeeBateau *taxeCalculeeBateaux = (TaxeCalculeeBateau *)
+            calloc(nbPlaces, sizeof(TaxeCalculeeBateau));
     calculerTaxeDescroissant(taxeCalculeeBateaux, port, nbPlaces);
     for (size_t i = 0; i < nbPlaces; ++i) {
-        printf("%d)\n", i);
-        TaxeCalculeeBateau stru = taxeCalculeeBateaux[i];
-
-        printf("taxe %f ", stru.taxe);
-        //afficherBateau(taxeCalculeeBateaux[i].bateau, taxeCalculeeBateaux[i].taxe);
+        printf("%d)\n", (int) i);
+        afficherBateau(taxeCalculeeBateaux[i].bateau, taxeCalculeeBateaux[i].taxe);
     }
     free(taxeCalculeeBateaux);
 }
